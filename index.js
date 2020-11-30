@@ -1,4 +1,4 @@
-module.exports = function spacedItems({ values, children = ['*']} = {}) {
+module.exports = function spacedItems({ values } = {}) {
   return function tailwindSpacedItems({ addUtilities, addUtilitiesaddComponents, e, prefix, config }) {
     let css = {}
     if (!values) {
@@ -6,10 +6,7 @@ module.exports = function spacedItems({ values, children = ['*']} = {}) {
       delete values['auto']
     }
 
-    const getSelector = (variant, name) =>
-      children
-        .map(ch => `.space-${variant}-${name} > ${ch} + ${ch}`)
-        .join(', ')
+    const getSelector = (variant, name) => `.space-${variant}-${name} > * + *`
 
     Object.keys(values).forEach(name => {
       let str = name

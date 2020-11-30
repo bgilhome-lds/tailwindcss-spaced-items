@@ -1,6 +1,6 @@
 This plugin generates a set of css classes to add fixed margins to container children, except last one, to spread content in a consistent manner.
 
-This can be useful when you want to spread items in the container with a set interval but don't want to add margins to every child manually and remove it from last child to make separation look proper. 
+This can be useful when you want to spread items in the container with a set interval but don't want to add margins to every child manually and remove it from last child to make separation look proper.
 
 ## Install
 yarn
@@ -31,14 +31,10 @@ module.exports = {
 ```
 This will produce css like this for each value in configs `margin` object:
 ```css
-.spaced-x-1 > * { margin-right: .25rem; }
-.spaced-x-1 > *:last-child { margin-right: 0; }
-.spaced-y-1 > * { margin-bottom: .25rem; }
-.spaced-y-1 > *:last-child { margin-bottom: 0; }
-.spaced-xy-1 > * { margin-bottom: .25rem;
-                   margin-right: .25rem; }
-.spaced-xy-1 > *:last-child { margin-bottom: 0;
-                              margin-right: 0; }
+.space-x-1 > * { margin-left: .25rem; }
+.space-y-1 > * { margin-top: .25rem; }
+.space-xy-1 > * { margin-top: .25rem;
+                   margin-left: .25rem; }
 
 /* ... */
 
@@ -61,34 +57,7 @@ module.exports = {
 ```
 This will produce:
 ```css
-.spaced-x-1 > * { margin-right: 1px; }
-.spaced-x-1 > *:last-child { margin-right: 0; }
+.space-x-1 > * + * { margin-left: 1px; }
 
 /* ... */
 
-```
-To define a child tag:
-```javascript
-const spacedItems = require('tailwindcss-spaced-items')
-module.exports = {
-  plugins: [
-    spacedItems({
-      children: ['div', 'p'],
-    }),
-  ],
-}
-```
-This will produce:
-```css
-.spaced-x-1 > div, 
-.spaced-x-1 > p {
-  margin-right: .25rem; 
-}
-.spaced-x-1 > div:last-child, 
-.spaced-x-1 > p:last-child 
-{ 
-  margin-right: 0; 
-}
-
-/* ... */
-```
