@@ -5,33 +5,27 @@ module.exports = function spacedItems({ values, children = ['*']} = {}) {
       values = Object.assign({}, config('margin'))
       delete values['auto']
     }
-    
-    const getSelector = (variant, name, last) =>
+
+    const getSelector = (variant, name) =>
       children
-        .map(ch => `.spaced-${variant}-${name} > ${ch}${last?':last-child':''}`)
+        .map(ch => `.space-${variant}-${name} > ${ch} + ${ch}`)
         .join(', ')
-    
+
     Object.keys(values).forEach(name => {
       let str = name
       let val = values[name]
-  
-      css[getSelector('x', str      )] = {'margin-right': `${val}`}
-      css[getSelector('x', str, true)] = {'margin-right': '0'}
-  
-      css[getSelector('y', str      )] = {'margin-bottom': `${val}`}
-      css[getSelector('y', str, true)] = {'margin-bottom': '0'}
-  
+
+      css[getSelector('x', str      )] = {'margin-left': `${val}`}
+
+      css[getSelector('y', str      )] = {'margin-top': `${val}`}
+
       css[getSelector('xy', str      )] = {
-        'margin-right': `${val}`,
-        'margin-bottom': `${val}`,
+        'margin-left': `${val}`,
+        'margin-top': `${val}`,
       }
-      css[getSelector('xy', str, true)] = {
-        'margin-right': '0',
-        'margin-bottom': '0',
-      }
-  
+
     })
-    
+
     addUtilities(css, { variants: ['responsive'] })
   }
 }
